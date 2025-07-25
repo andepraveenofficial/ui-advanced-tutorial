@@ -1,4 +1,4 @@
-# react-hook-form setup
+# react-hook-form with zod
 
 ### Tech Stack
 
@@ -24,3 +24,8 @@
 ### react-hook-form setup
 
 - Install react-hook-form: `npm install react-hook-form`
+
+### zod setup with react-hook-form
+
+- zod : `npm install zod`
+- resolver : `npm i @hookform/resolvers` => It connects the zod to the react-hook-form
