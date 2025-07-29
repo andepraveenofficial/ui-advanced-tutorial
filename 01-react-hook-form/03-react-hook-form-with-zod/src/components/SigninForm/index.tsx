@@ -94,9 +94,9 @@ const SigninForm: React.FC = () => {
 								<input
 									type='email'
 									placeholder='Enter Email'
-									{...register("anotherEmail")} // this input field stores the value with the name "email"
-									value={field.value} // Controller is used to control the input value
-									onChange={field.onChange} // onChange is used to update the input value
+									{...field}
+									value={field.value}
+									onChange={field.onChange}
 								/>
 								<div>
 									{errors.anotherEmail && (
