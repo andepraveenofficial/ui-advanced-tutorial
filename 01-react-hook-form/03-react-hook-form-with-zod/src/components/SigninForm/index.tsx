@@ -1,19 +1,22 @@
 import React from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { DevTool } from "@hookform/devtools"; // Importing Devtool for debugging
 
 let count: number = 0;
 
 type FormFieldTypes = {
 	username: string;
 	email: string;
+	anotherEmail: string;
 	password: string;
 };
 
 const schema = z.object({
 	username: z.string().min(3).max(6),
-	email: z.string().email(),
+	email: z.email(),
+	anotherEmail: z.email(),
 	password: z.string().min(6),
 });
 
@@ -23,8 +26,14 @@ const SigninForm: React.FC = () => {
   2. handleSubmit : this function is used to handle the form submission.
   3. handleSubmit validates the form data and calls the onSubmit function if the data is valid.
   */
-	const { register, handleSubmit, formState, setError } =
+	const { register, handleSubmit, formState, setError, control } =
 		useForm<FormFieldTypes>({
+			defaultValues: {
+				username: "",
+				email: "",
+				anotherEmail: "",
+				password: "",
+			},
 			resolver: zodResolver(schema),
 		});
 
@@ -76,6 +85,31 @@ const SigninForm: React.FC = () => {
 					</div>
 				</div>
 
+				<Controller
+					control={control}
+					name='anotherEmail'
+					render={({ field }) => {
+						return (
+							<div>
+								<input
+									type='email'
+									placeholder='Enter Email'
+									{...register("anotherEmail")} // this input field stores the value with the name "email"
+									value={field.value} // Controller is used to control the input value
+									onChange={field.onChange} // onChange is used to update the input value
+								/>
+								<div>
+									{errors.anotherEmail && (
+										<span style={{ color: "red" }}>
+											{errors.anotherEmail.message}
+										</span>
+									)}
+								</div>
+							</div>
+						);
+					}}
+				/>
+
 				<div>
 					<input
 						type='password'
@@ -100,6 +134,12 @@ const SigninForm: React.FC = () => {
 					)}
 				</div>
 			</form>
+
+			{/* DevTool is used to debug the form state 
+			It shows the form state in the console 
+		 It is useful for debugging the form state
+		 It is not required for the form to work */}
+			<DevTool control={control} />
 
 			<div>
 				<h2>Form Data:</h2>

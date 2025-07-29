@@ -29,3 +29,7 @@
 
 - zod : `npm install zod`
 - resolver : `npm i @hookform/resolvers` => It connects the zod to the react-hook-form
+
+### Devtools
+
+- Install devtools for debugging the form state: `npm install @hookform/devtools`
